@@ -51,7 +51,7 @@ class BigTwo():
         player.discardCard(card)
 
     def checkIfPair(self, card1, card2):
-        
+        return
 
     def isBiggestPair(self):
         if card1.getNumber() == card2.getNumber():
