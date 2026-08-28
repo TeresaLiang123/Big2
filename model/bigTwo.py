@@ -3,7 +3,7 @@ class BigTwo():
     def __init__(self, deck, player1, player2):
         self.players = [player1, player2, player3, player4]
         self.deck = deck
-        self.currentPlayStack = []
+        self.currentPlayStack = [] # list of combo lists
         self.whosTurn = random.choice(self.players)
         index = self.players.indexOf(self.whosTurn)
         self.playerIndex = index
@@ -50,8 +50,11 @@ class BigTwo():
         self.currentPlayStack.append(card)
         player.discardCard(card)
 
-    def checkIfPair(self, card1, card2):
-        return
+    def isPair(self, carad1, card2):
+        return card1.getNumber() == card2.getNumber()
 
-    def isBiggestPair(self):
-        if card1.getNumber() == card2.getNumber():
+    def isBiggestPair(self, card1, card2):
+        # [card1, card2]
+        self.currentPlayStack[-1]
+        if isPair and 
+
