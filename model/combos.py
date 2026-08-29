@@ -38,6 +38,9 @@ class Combos():
                     return false
         return true
     
+    def isFullHouse(self):
+        return
+
     def isStraightFlush(self):
         return self.isStraight() and self.isFlush()
     
@@ -50,3 +53,4 @@ class Combos():
             self.combo[4]
             
             for card in self.combo:
+    
