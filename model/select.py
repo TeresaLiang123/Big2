@@ -1,9 +1,10 @@
 class Select():
 
-    def __init__(self, card1 = "", card2 = "", card3 = "", card4 = "", card5 = "", isPassTurn = False):
+    def __init__(self, card1 = "", card2 = "", card3 = "", card4 = "", card5 = "", isPassTurn = False, isPlaying = False):
         
         self.cards = self.sortCards([card1, card2, card3, card4, card5])
         self.isPassTurn = isPassTurn
+        self.isPlaying = isPlaying
     
     def sortCards(self, cards):
         # sort smallest to greatest
@@ -12,19 +13,16 @@ class Select():
     def play(self):
         combo = Combos(self.cards)
         if combo.isSingle():
-            return "Single"
+            return Play("Single", self.cards)
         elif combo.isPair():
-            return "Pair"
+            return Play("Pair", self.cards)
         elif combo.isTriple():
-            return "Triple"
+            return Play("Triple", self.cards)
         elif combo.isStraight():
-            return "Straight"
+            return Play("Straight", self.cards)
         elif combo.isFlush():
-            return "Flush"
+            return Play("Flush", self.cards)
         elif combo.isFullHouse():
-            return "Full House"
+            return Play("Full House", self.cards)
         elif combo.isStraightFlush():
-            return "Straight Flush"
-        
-
-        
+            return Play("Straight Flush", self.cards)
