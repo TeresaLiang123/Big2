@@ -73,7 +73,9 @@ class BigTwo():
         roundNum = 1
         while True:
             if roundNum == 1:
-                self.playerTurn.play()
+                playedCombo = self.playerTurn.play()
+                
+                self.currentPlayStack.append(playedCombo)
         
     
     def isBiggerSingle(self, player, card):

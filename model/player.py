@@ -4,6 +4,7 @@ class Player():
         self.hand = cards # list of cards
         self.organize(self.hand)
         self.passTurn = False
+        self.isDoneSelecting = False
 
     def getName(self):
         return self.name
@@ -16,36 +17,44 @@ class Player():
     
     def organize(self, cards):
         # sort smallest to greatest
-        cards.sort(key= lambda card.getNumber())
+        return cards.sort(key= lambda card.getNumber())
     
     # show player's hand
     def select(self):
-        print("Select which cards to play")
+        print("Your hand: \n")
         for card in self.hand:
-            print()
+            print(str(card.getNumber()), card.getSuit())
+        
+        selection = []
+        while not self.isDoneSelecting:
+            cardIndex = input("Select which cards to play: ")
+            selection.append(self.hand[cardIndex])
+        selection = self.organize(selection)
+        return selection
+
+
 
     # cards is a list of cards that is selected to play
     def play(self):
         selectedCards = self.select()
-        sortedCombo = self.organize(cards)
-        combo = Combos(sortedCombo)
+        combo = Combos(selectedCards)
         if isPass:
             print("Turn passed!")
             self.passTurn = True
         elif combo.isSingle():
-            return Play("Single", cards)
+            return Combo("Single", cards)
         elif combo.isPair():
-            return Play("Pair", cards)
+            return Combo("Pair", cards)
         elif combo.isTriple():
-            return Play("Triple", cards)
+            return Combo("Triple", cards)
         elif combo.isStraight():
-            return Play("Straight", cards)
+            return Combo("Straight", cards)
         elif combo.isFlush():
-            return Play("Flush", cards)
+            return Combo("Flush", cards)
         elif combo.isFullHouse():
-            return Play("Full House", cards)
+            return Combo("Full House", cards)
         elif combo.isStraightFlush():
-            return Play("Straight Flush", cards)
+            return Combo("Straight Flush", cards)
         else:
             return print("Invalid play!")
     
