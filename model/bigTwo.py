@@ -96,12 +96,14 @@ class BigTwo():
                 if currentPlayCombo.getComboName() == "Single" and playerCombo.getComboName() == "Single":
                     if self.isBiggerSingle(currentPlayCombo, playerCombo):
                         print("Valid play! Your card is bigger\n")
+
                     else:
                         print("Your card is not bigger\n")
                         pass
 
 
             self.currentPlayStack.append(playerCombo)
+            self.playerTurn.discardCard(playerCombo)
             self.playerIndex += 1
             self.playerTurn = self.players[self.playerIndex]
 
@@ -133,10 +135,6 @@ class BigTwo():
                 print("Valid play! Your card's suit is bigger\n")
                 self.currentPlayStack.append(playerCombo)
                 return True
-            
-    def appendAndDiscard(self, player, card):
-        self.currentPlayStack.append(card)
-        player.discardCard(card)
 
     def isPair(self, carad1, card2):
         return card1.getNumber() == card2.getNumber()
