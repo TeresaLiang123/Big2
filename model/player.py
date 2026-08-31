@@ -10,13 +10,23 @@ class Player():
     
     def getHand(self):
         return self.hand
+
+    def addToHand(self, card):
+        self.hand.append(card)
     
     def organize(self, cards):
         # sort smallest to greatest
         cards.sort(key= lambda card.getNumber())
     
+    # show player's hand
+    def select(self):
+        print("Select which cards to play")
+        for card in self.hand:
+            print()
+
     # cards is a list of cards that is selected to play
-    def play(self, cards, isPass):
+    def play(self):
+        selectedCards = self.select()
         sortedCombo = self.organize(cards)
         combo = Combos(sortedCombo)
         if isPass:
