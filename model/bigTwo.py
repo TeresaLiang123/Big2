@@ -3,8 +3,9 @@ class BigTwo():
     def __init__(self, deck, player1, player2):
         self.players = [player1, player2, player3, player4]
         self.deck = deck
-        self.currentPlayStack = [] # list of combo lists
+        self.currentPlayStack = [] # list of combo lists Played objects
         self.whosTurn = random.choice(self.players)
+        
         index = self.players.indexOf(self.whosTurn)
         self.playerIndex = index
         if self.playerIndex + 1 > len(self.players):
