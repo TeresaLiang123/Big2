@@ -133,33 +133,6 @@ class BigTwo():
                 print("Valid play! Your card's suit is bigger\n")
                 self.currentPlayStack.append(playerCombo)
                 return True
-                
-    
-    def isBiggerSingle(self, player, card):
-
-        # When player's card number is bigger than previous card played
-        if currentPlayStack[-1].getNumber() < card.getNumber():
-            # append player's card to 
-            appendAndDiscard(player, card)
-
-        # When player's card number is less than previous card played
-        elif currentPlayStack[-1].getNumber() > card.getNumber()
-            print("Can't play that card, your card number is smaller!")
-        # When previous card played is same number
-        elif currentPlayStack[-1].getNumber() == card.getNumber():
-            stackCardSuit = currentPlayStack[-1].getSuit() # card previously played
-            playedStackCardSuit = card.getSuit() # player's card
-
-            prevPlayedCardSuit = self.suitRanks[stackCardSuit]
-            playersCardSuit = self.suitRanks[playedStackCardSuit]
-
-            # When player card suit is bigger than previous card played
-            if prevPlayedCardSuit < playersCardSuit:
-                appendAndDiscard(player, card)
-
-            # When player card suit is smaller than previous card played
-            elif prevPlayedCardSuit > playersCardSuit:
-                print("Can't play that card, your card suit is smaller!")
             
     def appendAndDiscard(self, player, card):
         self.currentPlayStack.append(card)
