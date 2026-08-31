@@ -12,6 +12,9 @@ class Player():
     def getHand(self):
         return self.hand
 
+    def getPassTurn(self):
+        return self.passTurn
+
     def addToHand(self, card):
         self.hand.append(card)
     
@@ -38,7 +41,8 @@ class Player():
     def play(self):
         selectedCards = self.select()
         combo = Combos(selectedCards)
-        if isPass:
+        isPass = input("Do you want to pass your turn?: ")
+        if isPass == "y":
             print("Turn passed!")
             self.passTurn = True
         elif combo.isSingle():

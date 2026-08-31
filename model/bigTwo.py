@@ -7,6 +7,7 @@ class BigTwo():
         self.winner = None
         self.playerTurn = None
         self.playerIndex = None
+        self.passCounter = 0
 
 '''
         self.whosTurn = random.choice(self.players)
@@ -76,6 +77,8 @@ class BigTwo():
         # check who goes first
         # Keep track of first round/turn
         roundNum = 1
+        newRound = False
+        payerCombo = None
         while True:
             if roundNum == 1:
                 playerCombo = self.playerTurn.play()
@@ -83,9 +86,27 @@ class BigTwo():
                 if not has_diamond3:
                     print("Must play diamond 3!")
                     pass
-            else:
+            else: # also need to check if current Player did not pass
+                if self.playerTurn.getPassTurn():
+                    self.passCounter += 1
+                    pass
+                
+                # clear
+                if passCounter == 3:
+                    self.currentPlayStack = []
+
                 if self.playerIndex == 5:
                     self.playerIndex = 0
+
+                if currentPlayStack == []:
+                    playerCombo = self.playerTurn.play()
+                    self.currentPlayStack.append(playerCombo)
+                    self.playerTurn.discardCard(playerCombo)
+                    # update to next player's turn
+                    self.playerIndex += 1
+                    self.playerTurn = self.players[self.playerIndex]
+                    pass
+                    
                 
                 # Combos to compare and identify which combo is bigger and if
                 # player's combo is a valid play
@@ -100,10 +121,11 @@ class BigTwo():
                     else:
                         print("Your card is not bigger\n")
                         pass
-
+                roundNum += 1
 
             self.currentPlayStack.append(playerCombo)
             self.playerTurn.discardCard(playerCombo)
+            # update to next player's turn
             self.playerIndex += 1
             self.playerTurn = self.players[self.playerIndex]
 
