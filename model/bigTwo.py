@@ -6,7 +6,9 @@ class BigTwo():
         self.currentPlayStack = [] # list of combo lists Played objects
         self.winner = None
         self.playerTurn = None
+        self.playerIndex = None
 
+'''
         self.whosTurn = random.choice(self.players)
         
         index = self.players.indexOf(self.whosTurn)
@@ -16,6 +18,8 @@ class BigTwo():
         else:
             self.playerIndex += 1
             self.whosNext = self.players[self.playerIndex]
+'''
+
         
         self.suitRanks = {
             "diamond" = 1
@@ -64,6 +68,7 @@ class BigTwo():
             # figure out who has diamond 3
             if card.getNumber() == 3 and card.getSuit() == "diamonds":
                 self.playerTurn = self.players[dealToPlayerIndex]
+                self.playerIndex = dealToPlayerIndex
             dealToPlayerIndex += 1
             if dealToPlayerIndex == 4:
                 dealToPlayerIndex = 0
@@ -73,10 +78,62 @@ class BigTwo():
         roundNum = 1
         while True:
             if roundNum == 1:
-                playedCombo = self.playerTurn.play()
+                playerCombo = self.playerTurn.play()
+                has_diamond3 = any(card.getNumber() == 3 and card.getSuit() == "diamond" for card in playedCombo.getCards())
+                if not has_diamond3:
+                    print("Must play diamond 3!")
+                    pass
+            else:
+                if self.playerIndex == 5:
+                    self.playerIndex = 0
                 
-                self.currentPlayStack.append(playedCombo)
-        
+                # Combos to compare and identify which combo is bigger and if
+                # player's combo is a valid play
+                currentPlayCombo = self.currentPlayStack[-1]
+                playerCombo = self.playerTurn.play()
+
+                # Check if Singles only play
+                if currentPlayCombo.getComboName() == "Single" and playerCombo.getComboName() == "Single":
+                    if self.isBiggerSingle(currentPlayCombo, playerCombo):
+                        print("Valid play! Your card is bigger\n")
+                    else:
+                        print("Your card is not bigger\n")
+                        pass
+
+
+            self.currentPlayStack.append(playerCombo)
+            self.playerIndex += 1
+            self.playerTurn = self.players[self.playerIndex]
+
+
+                    
+    # Returns true or false whether the player's single combo is
+    # bigger than the previous played single combo
+    def isBiggerSingle(self, currentPlayCombo, playerCombo):
+
+        # is player's single card bigger than previous played card
+        currentPlayComboNumber = currentPlayCombo.getCards()[-1].getNumber()
+        playerComboNumber = playerCombo.getCards()[-1].getNumber()
+
+        currentPlayComboSuit = currentPlayCombo.getCards()[-1].getSuit()
+        playerComboSuit = playerCombo.getCards()[-1].getSuit()
+
+        if currentPlayComboNumber > playerComboNumber:
+            print("Your card is not bigger\n")
+            return False
+        elif currentPlayComboNumber < playerComboNumber:
+            print("Valid play! Your card's number is bigger\n")
+            self.currentPlayStack.append(playerCombo)
+            return True
+        else: # when both cards are the same number
+            if self.suitRanks[currentPlayCombo] > self.suitRanks[playerCombo]:
+                print("Your card is not bigger\n")
+                return False
+            elif self.suitRanks[currentPlayCombo] < self.suitRanks[playerCombo]
+                print("Valid play! Your card's suit is bigger\n")
+                self.currentPlayStack.append(playerCombo)
+                return True
+                
     
     def isBiggerSingle(self, player, card):
 
