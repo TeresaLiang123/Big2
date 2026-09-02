@@ -1,17 +1,24 @@
 import random
-
+from card import Card
 class Deck():
 
     def __init__(self):
         self.deck = self.createDeck()
+        self.shuffle()
+        self.player1Hand = []
+        self.player2Hand = []
+        self.player3Hand = []
+        self.player4Hand = []
+        self.deal()
         player1Name = input("What's player 1's name: ")
         player2Name = input("What's player 2's name: ")
         player3Name = input("What's player 3's name: ")
         player4Name = input("What's player 4's name: ")
-        player1 = Player(player1Name)
-        player2 = Player(player2Name)
-        player3 = Player(player3Name)
-        player4 = Player(player4Name)
+        player1 = Player(self.player1Name, self.player1Hand)
+        player2 = Player(self.player2Name, self.player2Hand)
+        player3 = Player(self.player3Name, self.player3Hand)
+        player4 = Player(self.player4Name, self.player4Hand)
+
         self.game = BigTwo(self.deck, player1, player2, player3, player4)
         
     
@@ -86,9 +93,25 @@ class Deck():
         deck = []
         for card in cards.keys():
             deck.append(cards[card])
+        return deck
     
-    def getDeck():
+    def getDeck(self):
         return self.deck
     
-    def shuffle():
+    def shuffle(self):
         self.deck = random.shuffle(self.deck)
+
+    def deal(self):
+        playerIndex = 0
+        for card in self.deck:
+            if playerIndex == 0:
+                self.player1Hand.append(card)
+            elif playerIndex == 1:
+                self.player2Hand.append(card)
+            elif playerIndex == 2:
+                self.player3Hand.append(card)
+            elif playerIndex == 3:
+                self.player4Hand.append(card)
+                playerIndex = -1
+            playerIndex += 1
+    

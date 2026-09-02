@@ -122,7 +122,13 @@ class BigTwo():
                         print("Your card is not bigger\n")
                         pass
                 elif currentPlayCombo.getComboName() == "Pair" and playerCombo.getComboName() == "Pair"
-                    if self.self.isBiggerSingleOrPair(currentPlayCombo, playerCombo)
+                    if self.self.isBiggerSingleOrPair(currentPlayCombo, playerCombo):
+                        print("Valid play! Your card is bigger\n")
+
+                    else:
+                        print("Your card is not bigger\n")
+                        pass
+                
                 
                 roundNum += 1
 
