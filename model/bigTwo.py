@@ -115,13 +115,17 @@ class BigTwo():
 
                 # Check if Singles only play
                 if currentPlayCombo.getComboName() == "Single" and playerCombo.getComboName() == "Single":
-                    if self.isBiggerSingle(currentPlayCombo, playerCombo):
+                    if self.isBiggerSingleOrPair(currentPlayCombo, playerCombo):
                         print("Valid play! Your card is bigger\n")
 
                     else:
                         print("Your card is not bigger\n")
                         pass
+                elif currentPlayCombo.getComboName() == "Pair" and playerCombo.getComboName() == "Pair"
+                    if self.self.isBiggerSingleOrPair(currentPlayCombo, playerCombo)
+                
                 roundNum += 1
+
 
             self.currentPlayStack.append(playerCombo)
             self.playerTurn.discardCard(playerCombo)
@@ -129,11 +133,12 @@ class BigTwo():
             self.playerIndex += 1
             self.playerTurn = self.players[self.playerIndex]
 
-
-                    
     # Returns true or false whether the player's single combo is
     # bigger than the previous played single combo
     def isBiggerSingle(self, currentPlayCombo, playerCombo):
+
+        sortedCurrentCombo = self.sortBySuit(currentPlayCombo)
+        sortedPlayerCombo = self.sortBySuit(playerCombo)
 
         # is player's single card bigger than previous played card
         currentPlayComboNumber = currentPlayCombo.getCards()[-1].getNumber()
@@ -158,8 +163,38 @@ class BigTwo():
                 self.currentPlayStack.append(playerCombo)
                 return True
 
-    def isPair(self, carad1, card2):
-        return card1.getNumber() == card2.getNumber()
+    def isBiggerSingleOrPair(self, currentPlayCombo, playerCombo):
+        # sort the pair so it is least ot highest card by suit
+        sortedCurrentCombo = self.sortBySuit(currentPlayCombo)
+        sortedPlayerCombo = self.sortBySuit(playerCombo)
+        
+
+        # is player's single card bigger than previous played card
+        currentPlayComboNumber = sortedCurrentCombo.getCards()[-1].getNumber()
+        playerComboNumber = sortedPlayerCombo.getCards()[-1].getNumber()
+
+        currentPlayComboSuit = sortedCurrentCombo.getCards()[-1].getSuit()
+        playerComboSuit = sortedPlayerCombo.getCards()[-1].getSuit()
+
+        if currentPlayComboNumber > playerComboNumber:
+            print("Your card is not bigger\n")
+            return False
+        elif currentPlayComboNumber < playerComboNumber:
+            print("Valid play! Your card's number is bigger\n")
+            self.currentPlayStack.append(playerCombo)
+            return True
+        else: # when both cards are the same number
+            if self.suitRanks[currentPlayCombo] > self.suitRanks[playerCombo]:
+                print("Your card is not bigger\n")
+                return False
+            elif self.suitRanks[currentPlayCombo] < self.suitRanks[playerCombo]
+                print("Valid play! Your card's suit is bigger\n")
+                self.currentPlayStack.append(playerCombo)
+                return True
+        
+
+    def sortBySuit(self, combo):
+        return cards.sort(key=lambda self.suitRanks(card.getSuit()))
 
     def isBiggestPair(self, card1, card2):
         # [card1, card2]
