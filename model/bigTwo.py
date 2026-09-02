@@ -20,7 +20,6 @@ class BigTwo():
             self.playerIndex += 1
             self.whosNext = self.players[self.playerIndex]
 '''
-
         
         self.suitRanks = {
             "diamond" = 1

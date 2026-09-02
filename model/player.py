@@ -20,8 +20,8 @@ class Player():
     
     def organize(self, cards):
         # sort smallest to greatest
-        return cards.sort(key= lambda card.getNumber())
-    
+        cards = cards.sort(key= lambda card: card.getNumber())
+        return cards
     # show player's hand
     def select(self):
         print("Your hand: \n")
