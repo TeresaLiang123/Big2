@@ -14,13 +14,10 @@ class Player():
 
     def getPassTurn(self):
         return self.passTurn
-
-    def addToHand(self, card):
-        self.hand.append(card)
     
     def organize(self, cards):
         # sort smallest to greatest
-        cards = cards.sort(key= lambda card: card.getNumber())
+        cards.sort(key= lambda card: card.getNumber())
         return cards
     # show player's hand
     def select(self):
@@ -29,10 +26,26 @@ class Player():
             print(str(card.getNumber()), card.getSuit())
         
         selection = []
-        while not self.isDoneSelecting:
-            cardIndex = input("Select which cards to play: ")
-            selection.append(self.hand[cardIndex])
-        selection = self.organize(selection)
+        while not self.isDoneSelecting and len(selection) <= 5:
+            isNotSelecting = input("Are you done selecting?: ")
+            if isNotSelecting == "y":
+                self.isDoneSelecting = True
+            else:
+                selectOrDelete = input("Are you selecting or deselecting?: ")
+                if selectOrDelete == "selecting": # if player is selecting cards
+                    cardIndex = int(input("Select which card to play: "))
+                    if self.hand[cardIndex] not in selection:
+                        selection.append(self.hand[cardIndex])
+                    else:
+                        print("already selected that card")
+                else: # if player is deselecting cards
+                    if len(selection) == []:
+                        print("There is nothing to deselect")
+                    else:
+                        cardIndex = int(input("Select which card to deselect: "))
+                        deselecting = selection[cardIndex]
+                        selection.remove(deselecting)
+            selection = self.organize(selection)
         return selection
 
 

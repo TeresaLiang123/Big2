@@ -9,3 +9,6 @@ class Card():
     
     def getSuit(self):
         return self.suit
+
+    def __eq__(self, other_card):
+        return self.number == other_card.number and self.suit == other_card.suit
