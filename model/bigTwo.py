@@ -8,24 +8,12 @@ class BigTwo():
         self.playerTurn = None
         self.playerIndex = None
         self.passCounter = 0
-
-'''
-        self.whosTurn = random.choice(self.players)
-        
-        index = self.players.indexOf(self.whosTurn)
-        self.playerIndex = index
-        if self.playerIndex + 1 > len(self.players):
-            self.whosNext = self.players[0]
-        else:
-            self.playerIndex += 1
-            self.whosNext = self.players[self.playerIndex]
-'''
         
         self.suitRanks = {
-            "diamond" = 1
-            "clover" = 2
-            "heart" = 3
-            "spade" = 4
+            "diamond": 1,
+            "clover": 2,
+            "heart": 3,
+            "spade": 4
         }
 
         # key = type of combo
@@ -34,9 +22,9 @@ class BigTwo():
             "Single": ["Single"],
             "Pair": ["Pair"],
             "Triple": ["Triple"],
-            "Striaght": ["Straight", "Flush", "Straight Flush", "Full House", "Dynamite"]
-            "Flush": ["Flush", "Straight Flush", "Full House", "Dynamite"]
-            "Full House":["Full House", "Striaght Flush", "Dynamite"]
+            "Striaght": ["Straight", "Flush", "Straight Flush", "Full House", "Dynamite"],
+            "Flush": ["Flush", "Straight Flush", "Full House", "Dynamite"],
+            "Full House":["Full House", "Striaght Flush", "Dynamite"],
             "Straight Flush": ["Straight Flush", "Dynamite"]
         }
 
@@ -120,7 +108,7 @@ class BigTwo():
                     else:
                         print("Your card is not bigger\n")
                         pass
-                elif currentPlayCombo.getComboName() == "Pair" and playerCombo.getComboName() == "Pair"
+                elif currentPlayCombo.getComboName() == "Pair" and playerCombo.getComboName() == "Pair":
                     if self.self.isBiggerSingleOrPair(currentPlayCombo, playerCombo):
                         print("Valid play! Your card is bigger\n")
 
@@ -163,7 +151,7 @@ class BigTwo():
             if self.suitRanks[currentPlayCombo] > self.suitRanks[playerCombo]:
                 print("Your card is not bigger\n")
                 return False
-            elif self.suitRanks[currentPlayCombo] < self.suitRanks[playerCombo]
+            elif self.suitRanks[currentPlayCombo] < self.suitRanks[playerCombo]:
                 print("Valid play! Your card's suit is bigger\n")
                 self.currentPlayStack.append(playerCombo)
                 return True
@@ -192,17 +180,14 @@ class BigTwo():
             if self.suitRanks[currentPlayCombo] > self.suitRanks[playerCombo]:
                 print("Your card is not bigger\n")
                 return False
-            elif self.suitRanks[currentPlayCombo] < self.suitRanks[playerCombo]
+            elif self.suitRanks[currentPlayCombo] < self.suitRanks[playerCombo]:
                 print("Valid play! Your card's suit is bigger\n")
                 self.currentPlayStack.append(playerCombo)
                 return True
         
 
     def sortBySuit(self, combo):
-        return cards.sort(key=lambda self.suitRanks(card.getSuit()))
+        return cards.sort(key=lambda combo: self.suitRanks(combo.getSuit()))
 
-    def isBiggestPair(self, card1, card2):
-        # [card1, card2]
-        self.currentPlayStack[-1]
-        if isPair and 
+    
 
