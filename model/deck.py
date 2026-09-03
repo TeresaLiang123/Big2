@@ -7,10 +7,6 @@ class Deck():
     def __init__(self):
         self.deck = self.createDeck()
         self.shuffle()
-        self.player1Hand = []
-        self.player2Hand = []
-        self.player3Hand = []
-        self.player4Hand = []
         self.deal()
 
         player1Name = input("What's player 1's name: ")
@@ -97,6 +93,18 @@ class Deck():
             deck.append(cards[card])
         return deck
     
+    def getPlayer1Hand(self):
+        return self.player1Hand
+    
+    def getPlayer2Hand(self):
+        return self.player2Hand
+    
+    def getPlayer3Hand(self):
+        return self.player3Hand
+    
+    def getPlayer4Hand(self):
+        return self.player4Hand
+
     def getDeck(self):
         return self.deck
     
@@ -104,6 +112,10 @@ class Deck():
         random.shuffle(self.deck)
 
     def deal(self):
+        self.player1Hand = []
+        self.player2Hand = []
+        self.player3Hand = []
+        self.player4Hand = []
         playerIndex = 0
         for card in self.deck:
             if playerIndex == 0:
