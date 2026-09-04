@@ -60,21 +60,21 @@ class Player():
         if isPass == "y":
             print("Turn passed!")
             self.passTurn = True
-        elif combo.isSingle(combo):
+        elif combo.isSingle():
             combo.changeComboName("Single")
-        elif combo.isPair(combo):
+        elif combo.isPair():
             combo.changeComboName("Pair")
-        elif combo.isTriple(combo):
+        elif combo.isTriple():
             combo.changeComboName("Triple")
-        elif combo.isStraight(combo):
+        elif combo.isStraight():
             combo.changeComboName("Straight")
-        elif combo.isFlush(combo):
+        elif combo.isFlush():
             combo.changeComboName("Flush")
-        elif combo.isFullHouse(combo):
+        elif combo.isFullHouse():
             combo.changeComboName("Full House")
-        elif combo.isStraightFlush(combo):
+        elif combo.isStraightFlush():
             combo.changeComboName("Straight Flush")
-        elif combo.isDynamite(combo):
+        elif combo.isDynamite():
             combo.changeComboName("Dynamite")
         else:
             return print("Invalid play!")
