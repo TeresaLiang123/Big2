@@ -5,46 +5,57 @@ class Combo():
         self.cards = cards
         self.organize()
 
+    def changeComboName(self, newName):
+        self.comboName = newName
+
     def getComboName(self):
         return self.comboName
     
     def getCards(self):
         return self.cards
 
-    def isSingle(self, cards):
-        return len(cards) == 1
+    def isSingle(self):
+        return len(self.cards) == 1
     
-    def isPair(self, cards):
-        if len(cards) == 2:
-            return cards[0].getNumber() == cards[-1].getNumber()
+    def isPair(self):
+        if len(self.cards) == 2:
+            return self.cards[0].getNumber() == self.cards[-1].getNumber()
         return False
     
-    def isTriple(self, cards):
-        if len(cards) == 3:
-            return cards[0].getNumber() == cards[1].getNumber() and cards[1].getNumber() == self.cards[-1].getNumber()
+    def isTriple(self):
+        if len(self.cards) == 3:
+            return self.cards[0].getNumber() == self.cards[1].getNumber() and cards[1].getNumber() == self.cards[-1].getNumber()
         return False
 
-    def isStraight(self, cards):
-        if len(cards) == 5:
-            return abs(cards[0].getNumber() - cards[-1]) == 4
+    def isStraight(self):
+        if len(self.cards) == 5:
+            return abs(self.cards[0].getNumber() - self.cards[-1]) == 4
         return False
 
-    def isFlush(self, cards):
-        if len(cards) == 5:
-            suit = cards[0].getSuit()
-            for card in cards:
+    def isFlush(self):
+        if len(self.cards) == 5:
+            suit = self.cards[0].getSuit()
+            for card in self.cards:
                 if card.getSuit() != suit:
                     return False
             return True
 
-    def isStraightFlush(self, cards):
-        if len(cards) == 5:
-            return self.isStraight(cards) and self.isFlush(cards)
+    def isStraightFlush(self):
+        if len(self.cards) == 5:
+            return self.isStraight() and self.isFlush()
         return False
     
-    def isFullHouse(self, cards):
-        if len(cards) == 5:
-            return self.isPair(cards[:2]) and self.isTriple(cards[2:]) or self.isTriple([:3]) and self.isPair(3:):
+    def isFullHouse(self):
+        if len(self.cards) == 5:
+            # check if first two cards are a pair
+            if self.cards[0].getNumber() == self.cards[1].getNumber():
+                # check if last 3 cards are a triple
+                return self.cards[2].getNumber() == self.cards[3].getNumber() and self.cards[3].getNumber() == self.cards[4].getNumber()
+            # check if first 3 cards are a triple
+            elif self.cards[0].getNumber() == self.cards[1].getNumber() and self.cards[1].getNumber() == self.cards[2].getNumber():
+                return self.cards[3].getNumber() == self.cards[4].getNumber
+        return False
+
 
     def isFourOfKind(self, cards):
         num = cards[0].getNumber()
@@ -53,9 +64,12 @@ class Combo():
                 return False
         return True
 
-    def isDynamite(self, cards):
-        if len(cards) == 5:
-            return self.isSingle(cards[:1]) and self.isFourOfKind(cards[1:]) or self.isSingle(cards[:4]) and self.isFourOfKind[:1]
+    def isDynamite(self):
+        if len(self.cards) == 5:
+            # check if first 4 cards are four of a kind
+            if self.isFourOfKind(cards[1:]) or self.isFourOfKind(cards[:4]):
+                return True
+        return False
 
     def organize(self):
         self.cards.sort(key=lambda card: card.getNumber())

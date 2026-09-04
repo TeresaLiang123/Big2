@@ -1,3 +1,5 @@
+from combo import Combo
+
 class Player():
     def __init__(self, name, cards):
         self.name = name
@@ -53,27 +55,27 @@ class Player():
     # cards is a list of cards that is selected to play
     def play(self):
         selectedCards = self.select()
-        combo = Combo("unknown", selectedCards)
+        combo = Combo("Unknown", selectedCards)
         isPass = input("Do you want to pass your turn?: ")
         if isPass == "y":
             print("Turn passed!")
             self.passTurn = True
-        elif combo.isSingle(cards):
-            return Combo("Single", cards)
-        elif combo.isPair(cards):
-            return Combo("Pair", cards)
-        elif combo.isTriple(cards):
-            return Combo("Triple", cards)
-        elif combo.isStraight(cards):
-            return Combo("Straight", cards)
-        elif combo.isFlush(cards):
-            return Combo("Flush", cards)
-        elif combo.isFullHouse(cards):
-            return Combo("Full House", cards)
-        elif combo.isStraightFlush(cards):
-            return Combo("Straight Flush", cards)
-        elif combo.isDynamite(cards):
-            return Combo("Dynamite", cards)
+        elif combo.isSingle(selectedCards):
+            return Combo("Single", selectedCards)
+        elif combo.isPair(selectedCards):
+            return Combo("Pair", selectedCards)
+        elif combo.isTriple(selectedCards):
+            return Combo("Triple", selectedCards)
+        elif combo.isStraight(selectedCards):
+            return Combo("Straight", selectedCards)
+        elif combo.isFlush(selectedCards):
+            return Combo("Flush", selectedCards)
+        elif combo.isFullHouse(selectedCards):
+            return Combo("Full House", selectedCards)
+        elif combo.isStraightFlush(selectedCards):
+            return Combo("Straight Flush", selectedCards)
+        elif combo.isDynamite(selectedCards):
+            return Combo("Dynamite", selectedCards)
         else:
             return print("Invalid play!")
     
