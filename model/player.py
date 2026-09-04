@@ -24,12 +24,15 @@ class Player():
     # show player's hand
     def select(self):
         print("Your hand: \n")
-        cardi = 1
-        for card in self.hand:
-            print(str(cardi) + ". " + str(card.getNumber()), card.getSuit())
-            cardi+=1
+        for i, card in enumerate(self.hand, start=1):
+            print(f"{i}. {card.getNumber()} {card.getSuit()}")
+
         selection = []
-        while not self.isDoneSelecting and len(selection) <= 5:
+        while not self.isDoneSelecting:
+            print("This is your selection: \n")
+            for i, card in enumerate(selection, start=1):
+                print(f"{i}. {card.getNumber()} {card.getSuit()}")
+
             if len(selection) == 5:
                 print("You've reached the max number of cards you can select")
                 isDeselectingOrDone = input("Would you like to deselect or are you done?: ")
@@ -39,31 +42,30 @@ class Player():
                     selection.remove(deselecting)
                 elif isDeselectingOrDone == "done":
                     self.isDoneSelecting = True
-            print("This is your selection: \n")
-            cardi = 1
-            for card in selection:
-                print(str(cardi) + ".", str(card.getNumber()), card.getSuit())
-                cardi+=1
-            # when there is 
-            isNotSelecting = input("Are you done selecting?: ")
+                selection = self.organize(selection)
+                continue  # skip the normal prompt this round
+
+            isNotSelecting = input("Are you done?: ")
             if isNotSelecting == "y":
                 self.isDoneSelecting = True
             else:
                 selectOrDelete = input("Are you selecting or deselecting?: ")
-                if selectOrDelete == "selecting": # if player is selecting cards
+                if selectOrDelete == "selecting":
                     cardIndex = int(input("Select which card to play: ")) - 1
                     if self.hand[cardIndex] not in selection:
                         selection.append(self.hand[cardIndex])
                     else:
                         print("already selected that card")
-                else: # if player is deselecting cards
+                else:
                     if len(selection) == 0:
                         print("There is nothing to deselect")
                     else:
                         cardIndex = int(input("Select which card to deselect: ")) - 1
                         deselecting = selection[cardIndex]
                         selection.remove(deselecting)
+
             selection = self.organize(selection)
+
         return selection
 
 
