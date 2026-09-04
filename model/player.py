@@ -84,18 +84,19 @@ class Player():
             combo.changeComboName("Pair")
         elif combo.isTriple():
             combo.changeComboName("Triple")
-        elif combo.isStraight():
-            combo.changeComboName("Straight")
-        elif combo.isFlush():
-            combo.changeComboName("Flush")
-        elif combo.isFullHouse():
-            combo.changeComboName("Full House")
-        elif combo.isStraightFlush():
-            combo.changeComboName("Straight Flush")
         elif combo.isDynamite():
             combo.changeComboName("Dynamite")
+        elif combo.isStraightFlush():
+            combo.changeComboName("Straight Flush")
+        elif combo.isFullHouse():
+            combo.changeComboName("Full House")
+        elif combo.isFlush():
+            combo.changeComboName("Flush")
+        elif combo.isStraight():
+            combo.changeComboName("Straight")
         else:
-            return print("Invalid play!")
+            print("Invalid play!")
+            return None
         return combo
     
     def discardCard(self, cards):

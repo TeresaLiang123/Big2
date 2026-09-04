@@ -47,13 +47,10 @@ class Combo():
     
     def isFullHouse(self):
         if len(self.cards) == 5:
-            # check if first two cards are a pair
-            if self.cards[0].getNumber() == self.cards[1].getNumber():
-                # check if last 3 cards are a triple
-                return self.cards[2].getNumber() == self.cards[3].getNumber() and self.cards[3].getNumber() == self.cards[4].getNumber()
-            # check if first 3 cards are a triple
-            elif self.cards[0].getNumber() == self.cards[1].getNumber() and self.cards[1].getNumber() == self.cards[2].getNumber():
-                return self.cards[3].getNumber() == self.cards[4].getNumber
+            counts = {}
+            for card in self.cards:
+                counts[card.getNumber()] = counts.get(card.getNumber(), 0) + 1
+            return sorted(counts.values()) == [2, 3]
         return False
 
 
@@ -67,7 +64,7 @@ class Combo():
     def isDynamite(self):
         if len(self.cards) == 5:
             # check if first 4 cards are four of a kind
-            if self.isFourOfKind(cards[1:]) or self.isFourOfKind(cards[:4]):
+            if self.isFourOfKind(self.cards[1:]) or self.isFourOfKind(self.cards[:4]):
                 return True
         return False
 
