@@ -9,4 +9,7 @@ class Combo():
     
     def getCards(self):
         return self.cards
+
+    def __eq__(self, other):
+        return self.comboName == other.comboName and self.cards == other.cards
     
