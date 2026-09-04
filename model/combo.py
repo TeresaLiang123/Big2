@@ -24,12 +24,12 @@ class Combo():
     
     def isTriple(self):
         if len(self.cards) == 3:
-            return self.cards[0].getNumber() == self.cards[1].getNumber() and cards[1].getNumber() == self.cards[-1].getNumber()
+            return self.cards[0].getNumber() == self.cards[1].getNumber() and self.cards[1].getNumber() == self.cards[-1].getNumber()
         return False
 
     def isStraight(self):
         if len(self.cards) == 5:
-            return abs(self.cards[0].getNumber() - self.cards[-1]) == 4
+            return abs(self.cards[0].getNumber() - self.cards[-1].getNumber()) == 4
         return False
 
     def isFlush(self):

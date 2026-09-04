@@ -24,11 +24,24 @@ class Player():
     # show player's hand
     def select(self):
         print("Your hand: \n")
+        cardi = 0
         for card in self.hand:
-            print(str(card.getNumber()), card.getSuit())
-        
+            print(str(cardi) + ". " + str(card.getNumber()), card.getSuit())
+            cardi+=1
         selection = []
         while not self.isDoneSelecting and len(selection) <= 5:
+            print("This is your selection: \n")
+            for card in selection:
+                print(str(card.getNumber()), card.getSuit())
+            if len(selection) == 5:
+                print("You've reached the max number of cards you can select")
+                isNotSelecting = input("Are you done selecting?: ")
+                if isNotSelecting == "n":
+                    cardIndex = int(input("Select which card to deselect: "))
+                    deselecting = selection[cardIndex]
+                    selection.remove(deselecting)
+                
+            
             isNotSelecting = input("Are you done selecting?: ")
             if isNotSelecting == "y":
                 self.isDoneSelecting = True
@@ -41,7 +54,7 @@ class Player():
                     else:
                         print("already selected that card")
                 else: # if player is deselecting cards
-                    if len(selection) == []:
+                    if len(selection) == 0:
                         print("There is nothing to deselect")
                     else:
                         cardIndex = int(input("Select which card to deselect: "))
