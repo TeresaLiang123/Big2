@@ -158,12 +158,11 @@ class TestPlayer:
         fullHouseCombo = Combo("Full House", [Card(6, "diamond"), Card(6, "clover"), Card(6, "spade"), Card(9, "heart"), Card(9, "clover")])
         dynamiteCombo = Combo("Dynamite", [Card(8, "diamond"), Card(8, "clover"), Card(8, "spade"), Card(8, "heart"), Card(10, "clover")])
 
-        # assert self.player2.play() == singleCombo
-        # assert self.player4.play() == pairCombo
-        # assert self.player5.play() == tripleCombo
-        # assert self.player6.play() == straightCombo
-        # assert self.player7.play() == flushCombo
-        # assert self.player8.play() == straightFlushCombo
-        # assert self.player9.play() == fullHouseCombo
-        assert self.player10.play() == dynamiteCombo
-        
+        assert self.player2.playCards([Card(2, "spade")]) == singleCombo
+        assert self.player4.playCards([Card(2, "spade"), Card(2, "heart")]) == pairCombo
+        assert self.player5.playCards([Card(4, "diamond"), Card(4, "spade"), Card(4, "clover")]) == tripleCombo
+        assert self.player6.playCards([Card(5, "diamond"), Card(6, "clover"), Card(7, "spade"), Card(8, "heart"), Card(9, "diamond")]) == straightCombo
+        assert self.player7.playCards([Card(2, "spade"), Card(5, "spade"), Card(8, "spade"), Card(11, "spade"), Card(14, "spade")]) == flushCombo
+        assert self.player8.playCards([Card(3, "diamond"), Card(4, "diamond"), Card(5, "diamond"), Card(6, "diamond"), Card(7, "diamond")]) == straightFlushCombo
+        assert self.player9.playCards([Card(6, "diamond"), Card(6, "clover"), Card(6, "spade"), Card(9, "heart"), Card(9, "clover")]) == fullHouseCombo
+        assert self.player10.playCards([Card(8, "diamond"), Card(8, "clover"), Card(8, "spade"), Card(8, "heart"), Card(10, "clover")]) == dynamiteCombo

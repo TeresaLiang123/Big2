@@ -21,6 +21,7 @@ class Player():
         # sort smallest to greatest
         cards.sort(key= lambda card: card.getNumber())
         return cards
+
     # show player's hand
     def select(self):
         print("Your hand: \n")
@@ -68,17 +69,10 @@ class Player():
 
         return selection
 
-
-
-    # cards is a list of cards that is selected to play
-    def play(self):
-        selectedCards = self.select()
-        combo = Combo("Unknown", selectedCards)
-        isPass = input("Do you want to pass your turn?: ")
-        if isPass == "y":
-            print("Turn passed!")
-            self.passTurn = True
-        elif combo.isSingle():
+    # NEW: pure combo-classification logic — no input(), fully testable
+    def playCards(self, cards):
+        combo = Combo("Unknown", cards)
+        if combo.isSingle():
             combo.changeComboName("Single")
         elif combo.isPair():
             combo.changeComboName("Pair")
@@ -98,7 +92,17 @@ class Player():
             print("Invalid play!")
             return None
         return combo
-    
+
+    # cards is a list of cards that is selected to play
+    def play(self):
+        selectedCards = self.select()
+        isPass = input("Do you want to pass your turn?: ")
+        if isPass == "y":
+            print("Turn passed!")
+            self.passTurn = True
+            return None
+        return self.playCards(selectedCards)
+
     def discardCard(self, cards):
         for card in cards:
             self.hand.remove(card)

@@ -57,15 +57,13 @@ class Combo():
     def isFourOfKind(self, cards):
         num = cards[0].getNumber()
         for card in cards:
-            if card.getNumber != num:
+            if card.getNumber() != num:
                 return False
         return True
 
     def isDynamite(self):
         if len(self.cards) == 5:
-            # check if first 4 cards are four of a kind
-            if self.isFourOfKind(self.cards[1:]) or self.isFourOfKind(self.cards[:4]):
-                return True
+            return self.isFourOfKind(self.cards[1:]) or self.isFourOfKind(self.cards[:4])   # fixed: self.cards
         return False
 
     def organize(self):
