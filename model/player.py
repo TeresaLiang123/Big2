@@ -53,25 +53,27 @@ class Player():
     # cards is a list of cards that is selected to play
     def play(self):
         selectedCards = self.select()
-        combo = Combos(selectedCards)
+        combo = Combo("unknown", selectedCards)
         isPass = input("Do you want to pass your turn?: ")
         if isPass == "y":
             print("Turn passed!")
             self.passTurn = True
-        elif combo.isSingle():
+        elif combo.isSingle(cards):
             return Combo("Single", cards)
-        elif combo.isPair():
+        elif combo.isPair(cards):
             return Combo("Pair", cards)
-        elif combo.isTriple():
+        elif combo.isTriple(cards):
             return Combo("Triple", cards)
-        elif combo.isStraight():
+        elif combo.isStraight(cards):
             return Combo("Straight", cards)
-        elif combo.isFlush():
+        elif combo.isFlush(cards):
             return Combo("Flush", cards)
-        elif combo.isFullHouse():
+        elif combo.isFullHouse(cards):
             return Combo("Full House", cards)
-        elif combo.isStraightFlush():
+        elif combo.isStraightFlush(cards):
             return Combo("Straight Flush", cards)
+        elif combo.isDynamite(cards):
+            return Combo("Dynamite", cards)
         else:
             return print("Invalid play!")
     
