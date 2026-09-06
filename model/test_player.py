@@ -115,7 +115,6 @@ class TestPlayer:
         self.player9 = Player("George", fullHouseCards)
         self.player10 = Player("Bill", dynamiteCards)
 
-
     def test_getName(self):
         assert self.player1.getName() == "Bob"
     
@@ -143,10 +142,10 @@ class TestPlayer:
         print(organizedCards)
         assert organizedCards == sortedCardsVersion
     
-    # def test_select(self):
-        # assert self.player1.select() == []
-        # assert self.player2.select() == [Card(2, "spade")]
-        # assert self.player3.select() == [Card(2, "spade"), Card(14, "spade")]
+    def test_select(self):
+        assert self.player1.select() == []
+        assert self.player2.select() == [Card(2, "spade")]
+        assert self.player3.select() == [Card(2, "spade"), Card(14, "spade")]
     
     def test_play(self):
         singleCombo = Combo("Single", [Card(2, "spade")])
