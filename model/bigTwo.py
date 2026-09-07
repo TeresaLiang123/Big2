@@ -123,16 +123,16 @@ class BigTwo():
                         print("Your card is not bigger\n")
                         pass
                 elif currentPlayCombo.getComboName() == "Straight" and playerCombo.getComboName() == "Straight":
-                    if self.isBiggerStraight(currentPlayCombo, playerCombo):
+                    if self.isBiggerStraightOrStriaghtFlush(currentPlayCombo, playerCombo):
                         print("Valid play! Your straight combo is bigger\n")
                     else:
                         print("Your straight combo is not bigger\n")
                 elif currentPlayerCombo.getComboName() == "Straight Flush" and playerCombo.getComboName() == "Straight Flush":
-                    if self.isBiggerStraightFlush(currentPlayCombo, playerCombo):
+                    if self.isBiggerStraightOrStriaghtFlush(currentPlayCombo, playerCombo):
                         print("Valid play! Your straight flush is bigger\n")
                     else:
                         print("Your straight flush is smaller\n")
-            
+                elif currentPlayerCombo.getComboName() == 
 
                 
                 roundNum += 1
@@ -176,7 +176,7 @@ class BigTwo():
     def sortBySuit(self, combo):
         return cards.sort(key=lambda combo: self.suitRanks(combo.getSuit()))
 
-    def isBiggerStraight(self, currentPlayCombo, playCombo):
+    def isBiggerStraightOrStriaghtFlush(self, currentPlayCombo, playCombo):
         # is player's single card bigger than previous played card
         currentPlayComboNumber = sortedCurrentCombo.getCards()[-1].getNumber()
         playerComboNumber = sortedPlayerCombo.getCards()[-1].getNumber()
