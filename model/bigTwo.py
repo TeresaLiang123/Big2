@@ -132,8 +132,12 @@ class BigTwo():
                         print("Valid play! Your straight flush is bigger\n")
                     else:
                         print("Your straight flush is smaller\n")
-                elif currentPlayerCombo.getComboName() == 
-
+                elif currentPlayerCombo.getComboName() == "Full House" and playerCombo.getComboName() == "Full House":
+                    if self.isBiggerFullHouse(currentPlayCombo, playerCombo):
+                        print("Valid play! Your full house is bigger\n")
+                    else:
+                        print("Your full house is smaller\n")
+                
                 
                 roundNum += 1
 
@@ -176,7 +180,11 @@ class BigTwo():
     def sortBySuit(self, combo):
         return cards.sort(key=lambda combo: self.suitRanks(combo.getSuit()))
 
-    def isBiggerStraightOrStriaghtFlush(self, currentPlayCombo, playCombo):
+    def isBiggerStraightOrStriaghtFlush(self, currentPlayCombo, playerCombo):
+        # sort the pair so it is least ot highest card by suit
+        sortedCurrentCombo = self.sortBySuit(currentPlayCombo)
+        sortedPlayerCombo = self.sortBySuit(playerCombo)
+
         # is player's single card bigger than previous played card
         currentPlayComboNumber = sortedCurrentCombo.getCards()[-1].getNumber()
         playerComboNumber = sortedPlayerCombo.getCards()[-1].getNumber()
@@ -191,4 +199,22 @@ class BigTwo():
             return False
         else: # when same last number currentPlayerComboNumber == playerComboNumber
             return currentPlayComboSuit < playerComboSuit
+    
+    def isBiggerFullHouse(self, currentPlayCombo, playerCombo):
+        # 3 3 3 4 4
+        # 5 5 6 6 6
+        currentThreeTriple = Combo("Unknown", currentPlayCombo[:3])
+        isCurrentThreeTriple = currentThreeTriple.isTriple()
+
+        playerThreeTriple = Combo("Unknown", playerCombo[:3])
+        isPlayerThreeTriple = playerThreeTriple.isTriple()
+
+        if not isCurrentThreeTriple and isPlayerThreeTriple:
+            currentThreeTriple = Combo("Unknown", currentPlayCombo[3:])
+        elif isCurrentThreeTriple and not isPlayerThreeTriple:
+            playerThreeTriple = Combo("Unknown", playerCombo[3:])
+        elif not isCurrentThreeTriple and not isPlayerThreeTriple:
+            currentThreeTriple = Combo("Unknown", currentPlayCombo[3:])
+            playerThreeTriple = Combo("Unknown", playerCombo[3:])
+        return isBiggerSingleOrPairOrTriple(currentThreeTriple, playerThreeTriple)
     
