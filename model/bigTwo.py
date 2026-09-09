@@ -104,29 +104,26 @@ class BigTwo():
                 if currentPlayCombo.getComboName() == "Single" and playerCombo.getComboName() == "Single":
                     if self.isBiggerSingleOrPairOrTriple(currentPlayCombo, playerCombo):
                         print("Valid play! Your card is bigger\n")
-
                     else:
                         print("Your card is not bigger\n")
                         pass
                 elif currentPlayCombo.getComboName() == "Pair" and playerCombo.getComboName() == "Pair":
                     if self.self.isBiggerSingleOrPairOrTriple(currentPlayCombo, playerCombo):
-                        print("Valid play! Your card is bigger\n")
-
+                        print("Valid play! Your pair is bigger\n")
                     else:
-                        print("Your card is not bigger\n")
+                        print("Your pair is not bigger\n")
                         pass
                 elif currentPlayCombo.getComboName() == "Triple" and playerCombo.getComboName() == "Triple":
                     if self.isBiggerSingleOrPairOrTriple(currentPlayCombo, playerCombo):
-                        print("Valid play! Your card is bigger\n")
-
+                        print("Valid play! Your triple is bigger\n")
                     else:
-                        print("Your card is not bigger\n")
+                        print("Your triple is not bigger\n")
                         pass
                 elif currentPlayCombo.getComboName() == "Straight" and playerCombo.getComboName() == "Straight":
                     if self.isBiggerStraightOrStriaghtFlush(currentPlayCombo, playerCombo):
-                        print("Valid play! Your straight combo is bigger\n")
+                        print("Valid play! Your straight is bigger\n")
                     else:
-                        print("Your straight combo is not bigger\n")
+                        print("Your straight is not bigger\n")
                 elif currentPlayerCombo.getComboName() == "Straight Flush" and playerCombo.getComboName() == "Straight Flush":
                     if self.isBiggerStraightOrStriaghtFlush(currentPlayCombo, playerCombo):
                         print("Valid play! Your straight flush is bigger\n")
@@ -137,7 +134,16 @@ class BigTwo():
                         print("Valid play! Your full house is bigger\n")
                     else:
                         print("Your full house is smaller\n")
-                
+                elif currentPlayerCombo.getComboName() == "Flush" and playerCombo.getComboName() == "Flush":
+                    if self.isBiggerFlush(currentPlayCombo, playerCombo):
+                        print("Valid play! Your flush is bigger\n")
+                    else:
+                        print("Your flush is smaller\n")
+                elif currentPlayerCombo.getComboName() == "Dynamite" and playerCombo.getComboName() == "Dynamite":
+                    if self.isBiggerDynamite(currentPlayCombo, playerCombo):
+                        print("Valid play! Your dynamite is bigger\n")
+                    else:
+                        print("Your dynamite is smaller\n")
                 
                 roundNum += 1
 
@@ -176,7 +182,6 @@ class BigTwo():
                 self.currentPlayStack.append(playerCombo)
                 return True
         
-
     def sortBySuit(self, combo):
         return cards.sort(key=lambda combo: self.suitRanks(combo.getSuit()))
 
@@ -218,3 +223,26 @@ class BigTwo():
             playerThreeTriple = Combo("Unknown", playerCombo[3:])
         return isBiggerSingleOrPairOrTriple(currentThreeTriple, playerThreeTriple)
     
+    def isBiggerFlush(self, currentPlayCombo, playerCombo):
+
+        currentComboSuit = currentPlayCombo[0].getSuit()
+        playerComboSuit = playerCombo[0].getSuit()
+
+        return self.suitRanks[currentComboSuit] < self.suitRanks[playerComboSuit]
+
+    def isBiggerDynamite(self, currentPlayCombo, playerCombo):
+        
+        currentDynamite = Combo("Unknown", currentPlayCombo[:4])
+        playerDynamite = Combo("Unkown", playerCombo[:4])
+
+        isFirstFourCurrentDynamite = currentDynamite.isDynamite()
+        isFirstFourPlayerDynamite = playerDynamite.isDynamite()
+
+        if isFirstFourCurrentDynamite and not isFirstFourPlayerDynamite:
+            playerDynamite = Combo("Unkown", playerPlayCombo[1:])
+        elif not isFirstFourCurrentDynamite and isFirstFourPlayerDynamite:
+            currentDynamite = Combo("Unknown", currentPlayCombo[1:])
+        elif not isFirstFourCurrentDynamite and not isFirstFourCurrentDynamite:
+            playerDynamite = Combo("Unkown", playerPlayCombo[1:])
+            currentDynamite = Combo("Unknown", currentPlayCombo[1:])
+        return currentDynamite[0].getNumber() < playerDynamite[0].getNumber()
