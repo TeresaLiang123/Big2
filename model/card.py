@@ -1,9 +1,13 @@
 class Card():
 
-    def __init__(self, num, suit):
+    def __init__(self, name, num, suit):
+        self.name = name
         self.number = num
         self.suit = suit
     
+    def getName(self):
+        return self.name
+
     def getNumber(self):
         return self.number
     
@@ -11,4 +15,4 @@ class Card():
         return self.suit
 
     def __eq__(self, other_card):
-        return self.number == other_card.number and self.suit == other_card.suit
+        return self.name == other_card.name and self.number == other_card.number and self.suit == other_card.suit

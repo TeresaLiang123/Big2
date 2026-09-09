@@ -1,3 +1,4 @@
+from card import Card
 class BigTwo():
 
     def __init__(self, deck, player1, player2, player3, player4):
@@ -45,21 +46,20 @@ class BigTwo():
 
     def play(self):
         currentPlayerIndex = 0
-        for player in Players:
-            if currentPlayerIndex == 5:
-                currentPlayerIndex = 0
+        for player in self.players:
             if Card(3, "diamonds") in player.getHand():
                 self.playerTurn = self.players[currentPlayerIndex]
                 self.playerIndex = currentPlayerIndex
-            currentPlayerIndex += 0
-
+            currentPlayerIndex += 1
+        print("Player's turn: \n")
+        print(self.playerTurn)
+        print(self.playerIndex)
         # check who goes first
         # Keep track of first round/turn
         roundNum = 1
         newRound = False
         playerCombo = None
         while True:
-
             if roundNum == 1:
                 playerCombo = self.playerTurn.play()
                 has_diamond3 = any(card.getNumber() == 3 and card.getSuit() == "diamond" for card in playedCombo.getCards())
@@ -86,7 +86,7 @@ class BigTwo():
                     self.playerIndex += 1
                     self.playerTurn = self.players[self.playerIndex]
                     pass
-                    
+                
                 
                 # Combos to compare and identify which combo is bigger and if
                 # player's combo is a valid play
@@ -160,6 +160,11 @@ class BigTwo():
             # update to next player's turn
             self.playerIndex += 1
             self.playerTurn = self.players[self.playerIndex]
+            for player in Players:
+                if len(player.getHand()) == 0:
+                    self.winner = player
+                    break
+        print("Winner is", self.winner.getName(), "!")
 
     def isBiggerSingleOrPairOrTriple(self, currentPlayCombo, playerCombo):
         # sort the pair so it is least ot highest card by suit
