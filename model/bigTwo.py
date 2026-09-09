@@ -19,13 +19,10 @@ class BigTwo():
         # key = type of combo
         # value = [list of combos that can beat the key which is the type of combo]
         self.heigharchyCombos = {
-            "Single": ["Single"],
-            "Pair": ["Pair"],
-            "Triple": ["Triple"],
-            "Striaght": ["Straight", "Flush", "Straight Flush", "Full House", "Dynamite"],
-            "Flush": ["Flush", "Straight Flush", "Full House", "Dynamite"],
-            "Full House":["Full House", "Striaght Flush", "Dynamite"],
-            "Straight Flush": ["Straight Flush", "Dynamite"]
+            "Striaght": ["Flush", "Straight Flush", "Full House", "Dynamite"],
+            "Flush": [ "Straight Flush", "Full House", "Dynamite"],
+            "Full House":["Striaght Flush", "Dynamite"],
+            "Straight Flush": ["Dynamite"]
         }
 
     '''
@@ -65,7 +62,7 @@ class BigTwo():
         # Keep track of first round/turn
         roundNum = 1
         newRound = False
-        payerCombo = None
+        playerCombo = None
         while True:
             if roundNum == 1:
                 playerCombo = self.playerTurn.play()
@@ -124,27 +121,42 @@ class BigTwo():
                         print("Valid play! Your straight is bigger\n")
                     else:
                         print("Your straight is not bigger\n")
+                        pass
                 elif currentPlayerCombo.getComboName() == "Straight Flush" and playerCombo.getComboName() == "Straight Flush":
                     if self.isBiggerStraightOrStriaghtFlush(currentPlayCombo, playerCombo):
                         print("Valid play! Your straight flush is bigger\n")
                     else:
                         print("Your straight flush is smaller\n")
+                        pass
                 elif currentPlayerCombo.getComboName() == "Full House" and playerCombo.getComboName() == "Full House":
                     if self.isBiggerFullHouse(currentPlayCombo, playerCombo):
                         print("Valid play! Your full house is bigger\n")
                     else:
                         print("Your full house is smaller\n")
+                        pass
                 elif currentPlayerCombo.getComboName() == "Flush" and playerCombo.getComboName() == "Flush":
                     if self.isBiggerFlush(currentPlayCombo, playerCombo):
                         print("Valid play! Your flush is bigger\n")
                     else:
                         print("Your flush is smaller\n")
+                        pass
                 elif currentPlayerCombo.getComboName() == "Dynamite" and playerCombo.getComboName() == "Dynamite":
                     if self.isBiggerDynamite(currentPlayCombo, playerCombo):
                         print("Valid play! Your dynamite is bigger\n")
                     else:
                         print("Your dynamite is smaller\n")
-                
+                        pass
+                elif currentPlayerCombo.getComboName() == "Straight" and playerCombo.getComboName() in self.heigharchyCombos["Straight"]:
+                    print("Valid play! Your combo is bigger")
+                elif currentPlayerCombo.getComboName() == "Flush" and playerCombo.getComboName() in self.heigharchyCombos["Flush"]:
+                    print("Valid play! Your combo is bigger")
+                elif currentPlayerCombo.getComboName() == "Full House" and playerCombo.getComboName() in self.heigharchyCombos["Full House"]:
+                    print("Valid play!. Your combo is bigger")
+                elif currentPlayerCombo.getComboName() == "Dynamite" and playerCombo.getComboName() in self.heigharchyCombos["Dynamite"]:
+                    print("Valid play!. Your combo is bigger")
+                else:
+                    pass
+
                 roundNum += 1
 
             self.currentPlayStack.append(playerCombo)
