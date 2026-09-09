@@ -8,17 +8,6 @@ class Deck():
         self.deck = self.createDeck()
         self.shuffle()
         self.deal()
-
-        player1Name = input("What's player 1's name: ")
-        player2Name = input("What's player 2's name: ")
-        player3Name = input("What's player 3's name: ")
-        player4Name = input("What's player 4's name: ")
-        player1 = Player(player1Name, self.player1Hand)
-        player2 = Player(player2Name, self.player2Hand)
-        player3 = Player(player3Name, self.player3Hand)
-        player4 = Player(player4Name, self.player4Hand)
-
-        self.game = BigTwo(self.deck, player1, player2, player3, player4)
     
     def createDeck(self):
         cards = {
