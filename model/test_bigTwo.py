@@ -1,3 +1,7 @@
+from bigTwo import BigTwo
+from player import Player
+from deck import Deck
+
 class TestBigTwo:
 
     def setup_method(self):
@@ -11,7 +15,7 @@ class TestBigTwo:
         player2Hand = deck.getPlayer2Hand()
         player3Hand = deck.getPlayer3Hand()
         player4Hand = deck.getPlayer4Hand()
-        
+
         player1 = Player(player1Name, player1Hand)
         player2 = Player(player2Name, player2Hand)
         player3 = Player(player3Name, player3Hand)

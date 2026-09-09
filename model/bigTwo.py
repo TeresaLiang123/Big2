@@ -44,19 +44,14 @@ class BigTwo():
     '''
 
     def play(self):
-        self.deck.shuffle()
-
-        # Dealing cards to players
-        dealToPlayerIndex = 0
-        for card in self.deck:
-            self.players[dealToPlayerIndex].addToHand(card)
-            # figure out who has diamond 3
-            if card.getNumber() == 3 and card.getSuit() == "diamonds":
-                self.playerTurn = self.players[dealToPlayerIndex]
-                self.playerIndex = dealToPlayerIndex
-            dealToPlayerIndex += 1
-            if dealToPlayerIndex == 4:
-                dealToPlayerIndex = 0
+        currentPlayerIndex = 0
+        for player in Players:
+            if currentPlayerIndex == 5:
+                currentPlayerIndex = 0
+            if Card(3, "diamonds") in player.getHand():
+                self.playerTurn = self.players[currentPlayerIndex]
+                self.playerIndex = currentPlayerIndex
+            currentPlayerIndex += 0
 
         # check who goes first
         # Keep track of first round/turn
@@ -64,6 +59,7 @@ class BigTwo():
         newRound = False
         playerCombo = None
         while True:
+
             if roundNum == 1:
                 playerCombo = self.playerTurn.play()
                 has_diamond3 = any(card.getNumber() == 3 and card.getSuit() == "diamond" for card in playedCombo.getCards())
