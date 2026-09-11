@@ -24,15 +24,16 @@ class Player():
 
     # show player's hand
     def select(self):
+        self.isDoneSelecting = False  # reset so this works on repeated calls
         print("Your hand: \n")
         for i, card in enumerate(self.hand, start=1):
-            print(f"{i}. {card.getNumber()} {card.getSuit()}")
+            print(f"{i}. {card.getName()}")
 
         selection = []
         while not self.isDoneSelecting:
             print("This is your selection: \n")
             for i, card in enumerate(selection, start=1):
-                print(f"{i}. {card.getNumber()} {card.getSuit()}")
+                print(f"{i}. {card.getName()}")
 
             if len(selection) == 5:
                 print("You've reached the max number of cards you can select")
@@ -103,6 +104,6 @@ class Player():
             return None
         return self.playCards(selectedCards)
 
-    def discardCard(self, cards):
+    def discardCard(self, card):
         for card in cards:
             self.hand.remove(card)

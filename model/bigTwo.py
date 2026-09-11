@@ -47,9 +47,12 @@ class BigTwo():
     def play(self):
         currentPlayerIndex = 0
         for player in self.players:
-            if Card(3, "diamonds") in player.getHand():
-                self.playerTurn = self.players[currentPlayerIndex]
-                self.playerIndex = currentPlayerIndex
+            print(f"{player.getName()}'s hand:")
+            for card in player.getHand():
+                print(f"  name={card.getName()}, number={card.getNumber()}, suit={card.getSuit()}")
+                if card.getNumber() == 3 and "diamond" in card.getSuit():
+                    self.playerTurn = player
+                    self.playerIndex = currentPlayerIndex
             currentPlayerIndex += 1
         print("Player's turn: \n")
         print(self.playerTurn)
@@ -62,14 +65,17 @@ class BigTwo():
         while True:
             if roundNum == 1:
                 playerCombo = self.playerTurn.play()
-                has_diamond3 = any(card.getNumber() == 3 and card.getSuit() == "diamond" for card in playedCombo.getCards())
+                if playerCombo is None:
+                    print("You must play a valid combo containing the 3 of diamonds!")
+                    continue
+                has_diamond3 = any(card.getNumber() == 3 and card.getSuit() == "diamond" for card in playerCombo.getCards())
                 if not has_diamond3:
                     print("Must play diamond 3!")
-                    pass
-            else: # also need to check if current Player did not pass
-                if self.playerTurn.getPassTurn():
-                    self.passCounter += 1
-                    pass
+                    continue
+                else: # also need to check if current Player did not pass
+                    if self.playerTurn.getPassTurn():
+                        self.passCounter += 1
+                        pass
                 
                 # clear
                 if passCounter == 3:
