@@ -95,7 +95,7 @@ class BigTwo():
 
             if len(self.currentPlayStack) == 0:
                 self.currentPlayStack.append(playerCombo)
-                self.playerTurn.discardCard(playerCombo)
+                self.playerTurn.discardCard(playerCombo.getCards())
                 # update to next player's turn
                 self.playerIndex += 1
                 self.playerTurn = self.players[self.playerIndex]
@@ -169,7 +169,8 @@ class BigTwo():
             roundNum += 1
 
         self.currentPlayStack.append(playerCombo)
-        self.playerTurn.discardCard(playerCombo)
+        # bigTwo.py — both call sites
+        self.playerTurn.discardCard(playerCombo.getCards())
         # update to next player's turn
         self.playerIndex += 1
         self.playerTurn = self.players[self.playerIndex]
@@ -209,7 +210,9 @@ class BigTwo():
                 return True
         
     def sortBySuit(self, combo):
-        return cards.sort(key=lambda combo: self.suitRanks(combo.getSuit()))
+        cardsList = combo.getCards()
+        cardsList.sort(key=lambda card: self.suitRanks[card.getSuit()])
+        return cardsList
 
     def isBiggerStraightOrStriaghtFlush(self, currentPlayCombo, playerCombo):
         # sort the pair so it is least ot highest card by suit

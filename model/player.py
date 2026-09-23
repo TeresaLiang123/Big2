@@ -104,6 +104,6 @@ class Player():
             return None
         return self.playCards(selectedCards)
 
-    def discardCard(self, card):
+    def discardCard(self, cards):
         for card in cards:
             self.hand.remove(card)
