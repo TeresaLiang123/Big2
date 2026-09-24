@@ -156,47 +156,48 @@ class BigTwo():
                 else:
                     print("Your straight is not bigger\n")
                     pass
-            elif currentPlayerCombo.getComboName() == "Straight Flush" and playerCombo.getComboName() == "Straight Flush":
+            elif currentPlayCombo.getComboName() == "Straight Flush" and playerCombo.getComboName() == "Straight Flush":
                 if self.isBiggerStraightOrStriaghtFlush(currentPlayCombo, playerCombo):
                     print("Valid play! Your straight flush is bigger\n")
                     isValidPlay = True
                 else:
                     print("Your straight flush is smaller\n")
                     pass
-            elif currentPlayerCombo.getComboName() == "Full House" and playerCombo.getComboName() == "Full House":
+            elif currentPlayCombo.getComboName() == "Full House" and playerCombo.getComboName() == "Full House":
                 if self.isBiggerFullHouse(currentPlayCombo, playerCombo):
                     print("Valid play! Your full house is bigger\n")
                     isValidPlay = True
                 else:
                     print("Your full house is smaller\n")
                     pass
-            elif currentPlayerCombo.getComboName() == "Flush" and playerCombo.getComboName() == "Flush":
+            elif currentPlayCombo.getComboName() == "Flush" and playerCombo.getComboName() == "Flush":
                 if self.isBiggerFlush(currentPlayCombo, playerCombo):
                     print("Valid play! Your flush is bigger\n")
                     isValidPlay = True
                 else:
                     print("Your flush is smaller\n")
                     pass
-            elif currentPlayerCombo.getComboName() == "Dynamite" and playerCombo.getComboName() == "Dynamite":
+            elif currentPlayCombo.getComboName() == "Dynamite" and playerCombo.getComboName() == "Dynamite":
                 if self.isBiggerDynamite(currentPlayCombo, playerCombo):
                     print("Valid play! Your dynamite is bigger\n")
                     isValidPlay = True
                 else:
                     print("Your dynamite is smaller\n")
                     pass
-            elif currentPlayerCombo.getComboName() == "Straight" and playerCombo.getComboName() in self.heigharchyCombos["Straight"]:
+            elif currentPlayCombo.getComboName() == "Straight" and playerCombo.getComboName() in self.heigharchyCombos["Straight"]:
                 print("Valid play! Your combo is bigger")
                 isValidPlay = True
-            elif currentPlayerCombo.getComboName() == "Flush" and playerCombo.getComboName() in self.heigharchyCombos["Flush"]:
+            elif currentPlayCombo.getComboName() == "Flush" and playerCombo.getComboName() in self.heigharchyCombos["Flush"]:
                 print("Valid play! Your combo is bigger")
                 isValidPlay = True
-            elif currentPlayerCombo.getComboName() == "Full House" and playerCombo.getComboName() in self.heigharchyCombos["Full House"]:
+            elif currentPlayCombo.getComboName() == "Full House" and playerCombo.getComboName() in self.heigharchyCombos["Full House"]:
                 print("Valid play!. Your combo is bigger")
                 isValidPlay = True
-            elif currentPlayerCombo.getComboName() == "Dynamite" and playerCombo.getComboName() in self.heigharchyCombos["Dynamite"]:
+            elif currentPlayCombo.getComboName() == "Dynamite" and playerCombo.getComboName() in self.heigharchyCombos["Dynamite"]:
                 print("Valid play!. Your combo is bigger")
                 isValidPlay = True
             else:
+                print("Not a valid play")
                 pass
 
             roundNum += 1
@@ -236,17 +237,13 @@ class BigTwo():
         playerComboSuit = sortedPlayerCombo[-1].getSuit()
 
         if currentPlayComboNumber > playerComboNumber:
-            print("Your card is not bigger\n")
             return False
         elif currentPlayComboNumber < playerComboNumber:
-            print("Valid play! Your card's number is bigger\n")
             return True
         else:
             if self.suitRanks[currentPlayComboSuit] > self.suitRanks[playerComboSuit]:
-                print("Your card is not bigger\n")
                 return False
             elif self.suitRanks[currentPlayComboSuit] < self.suitRanks[playerComboSuit]:
-                print("Valid play! Your card's suit is bigger\n")
                 return True
         
     def sortBySuit(self, combo):
