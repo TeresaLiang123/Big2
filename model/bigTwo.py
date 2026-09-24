@@ -92,12 +92,21 @@ class BigTwo():
                 
             # clear
             playerCombo = self.playerTurn.play()
-            if self.playerTurn.getPassTurn():
+            if playerCombo is None:
+                # player passed (or made an invalid play that returned None)
                 self.passCounter += 1
-            
-            if self.passCounter == 3:
-                self.currentPlayStack = []
-                self.passCounter = 0
+                print(f"{self.playerTurn.getName()} passed.\n")
+
+                if self.passCounter == 3:
+                    self.currentPlayStack = []
+                    self.passCounter = 0
+
+                if self.playerIndex == 3:
+                    self.playerIndex = 0
+                else:
+                    self.playerIndex += 1
+                self.playerTurn = self.players[self.playerIndex]
+                continue
 
             if self.playerIndex == 5:
                 self.playerIndex = 0
