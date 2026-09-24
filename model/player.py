@@ -91,7 +91,6 @@ class Player():
             combo.changeComboName("Straight")
         else:
             print("Invalid play!")
-            return None
         return combo
 
     # cards is a list of cards that is selected to play
