@@ -75,6 +75,10 @@ class BigTwo():
                 if playerCombo is None:
                     print("You must play a valid combo containing the 3 of diamonds!")
                     continue
+                # when given invalid combo
+                if playerCombo.getComboName() == "Unknown":
+                    print("That's not a valid combo. Try again.")
+                    continue
                 has_diamond3 = any(card.getNumber() == 3 and card.getSuit() == "diamonds" for card in playerCombo.getCards())
                 if not has_diamond3:
                     print("Must play diamond 3!")
@@ -90,8 +94,9 @@ class BigTwo():
                     roundNum += 1
                     continue
                 
-            # clear
+        
             playerCombo = self.playerTurn.play()
+            # clear
             if playerCombo is None:
                 # player passed (or made an invalid play that returned None)
                 self.passCounter += 1
@@ -107,6 +112,7 @@ class BigTwo():
                     self.playerIndex += 1
                 self.playerTurn = self.players[self.playerIndex]
                 continue
+            
 
             if self.playerIndex == 5:
                 self.playerIndex = 0
