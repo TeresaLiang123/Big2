@@ -227,6 +227,26 @@ class BigTwo():
                 roundNum += 1
             else:
                 continue
+
+    def isBiggerSingleOrPairOrTriple(self, currentPlayCombo, playerCombo):
+        sortedCurrentCombo = self.sortBySuit(currentPlayCombo)
+        sortedPlayerCombo = self.sortBySuit(playerCombo)
+
+        currentPlayComboNumber = sortedCurrentCombo[-1].getNumber()
+        playerComboNumber = sortedPlayerCombo[-1].getNumber()
+
+        currentPlayComboSuit = sortedCurrentCombo[-1].getSuit()
+        playerComboSuit = sortedPlayerCombo[-1].getSuit()
+
+        if currentPlayComboNumber > playerComboNumber:
+            return False
+        elif currentPlayComboNumber < playerComboNumber:
+            return True
+        else:
+            if self.suitRanks[currentPlayComboSuit] > self.suitRanks[playerComboSuit]:
+                return False
+            elif self.suitRanks[currentPlayComboSuit] < self.suitRanks[playerComboSuit]:
+                return True
         
     def sortBySuit(self, combo):
         cardsList = combo.getCards()
