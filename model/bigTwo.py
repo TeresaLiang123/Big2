@@ -59,46 +59,54 @@ class BigTwo():
         print("Player's turn: \n")
         print(self.playerTurn)
         print(self.playerIndex)
-        # check who goes first
-        # Keep track of first round/turn
+
         roundNum = 1
-        newRound = False
         playerCombo = None
+
         while True:
             if len(self.currentPlayStack) != 0:
                 print("Previously played:")
                 for card in self.currentPlayStack[-1].getCards():
                     print(card.getName())
 
+            # ROUND 1: must play a combo containing the 3 of diamonds
             if roundNum == 1:
                 playerCombo = self.playerTurn.play()
                 if playerCombo is None:
                     print("You must play a valid combo containing the 3 of diamonds!")
                     continue
-                # when given invalid combo
                 if playerCombo.getComboName() == "Unknown":
                     print("That's not a valid combo. Try again.")
                     continue
-                has_diamond3 = any(card.getNumber() == 3 and card.getSuit() == "diamonds" for card in playerCombo.getCards())
+
+                has_diamond3 = any(
+                    card.getNumber() == 3 and card.getSuit() == "diamonds"
+                    for card in playerCombo.getCards()
+                )
                 if not has_diamond3:
                     print("Must play diamond 3!")
                     continue
+
+                self.currentPlayStack.append(playerCombo)
+                self.playerTurn.discardCard(playerCombo.getCards())
+
+                if len(self.playerTurn.getHand()) == 0:
+                    self.winner = self.playerTurn
+                    print(f"Winner is {self.winner.getName()}!")
+                    return
+
+                if self.playerIndex == 3:
+                    self.playerIndex = 0
                 else:
-                    self.currentPlayStack.append(playerCombo)          
-                    self.playerTurn.discardCard(playerCombo.getCards()) 
-                    if self.playerIndex == 3:
-                        self.playerIndex = 0
-                    else:
-                        self.playerIndex += 1
-                    self.playerTurn = self.players[self.playerIndex]
-                    roundNum += 1
-                    continue
-                
-        
+                    self.playerIndex += 1
+                self.playerTurn = self.players[self.playerIndex]
+                roundNum += 1
+                continue
+
+            # ROUNDS 2+
             playerCombo = self.playerTurn.play()
-            # clear
+
             if playerCombo is None:
-                # player passed (or made an invalid play that returned None)
                 self.passCounter += 1
                 print(f"{self.playerTurn.getName()} passed.\n")
 
@@ -112,105 +120,105 @@ class BigTwo():
                     self.playerIndex += 1
                 self.playerTurn = self.players[self.playerIndex]
                 continue
-            
 
-            if self.playerIndex == 5:
-                self.playerIndex = 0
+            if playerCombo.getComboName() == "Unknown":
+                print("That's not a valid combo. Try again.")
+                continue
 
             if len(self.currentPlayStack) == 0:
+                # stack was just cleared (3 passes) — anything goes
                 self.currentPlayStack.append(playerCombo)
                 self.playerTurn.discardCard(playerCombo.getCards())
-                # update to next player's turn
+
+                if len(self.playerTurn.getHand()) == 0:
+                    self.winner = self.playerTurn
+                    print(f"Winner is {self.winner.getName()}!")
+                    return
+
                 if self.playerIndex == 3:
                     self.playerIndex = 0
                 else:
                     self.playerIndex += 1
                 self.playerTurn = self.players[self.playerIndex]
-                pass
-            
-            
+                continue
+
             # Combos to compare and identify which combo is bigger and if
             # player's combo is a valid play
             currentPlayCombo = self.currentPlayStack[-1]
             isValidPlay = False
-            # Check if Singles only play
+
             if currentPlayCombo.getComboName() == "Single" and playerCombo.getComboName() == "Single":
                 if self.isBiggerSingleOrPairOrTriple(currentPlayCombo, playerCombo):
                     print("Valid play! Your card is bigger\n")
                     isValidPlay = True
                 else:
                     print("Your card is not bigger\n")
-                    pass
             elif currentPlayCombo.getComboName() == "Pair" and playerCombo.getComboName() == "Pair":
                 if self.isBiggerSingleOrPairOrTriple(currentPlayCombo, playerCombo):
                     print("Valid play! Your pair is bigger\n")
                     isValidPlay = True
                 else:
                     print("Your pair is not bigger\n")
-                    pass
             elif currentPlayCombo.getComboName() == "Triple" and playerCombo.getComboName() == "Triple":
                 if self.isBiggerSingleOrPairOrTriple(currentPlayCombo, playerCombo):
                     print("Valid play! Your triple is bigger\n")
                     isValidPlay = True
                 else:
                     print("Your triple is not bigger\n")
-                    pass
             elif currentPlayCombo.getComboName() == "Straight" and playerCombo.getComboName() == "Straight":
                 if self.isBiggerStraightOrStriaghtFlush(currentPlayCombo, playerCombo):
                     print("Valid play! Your straight is bigger\n")
                     isValidPlay = True
                 else:
                     print("Your straight is not bigger\n")
-                    pass
             elif currentPlayCombo.getComboName() == "Straight Flush" and playerCombo.getComboName() == "Straight Flush":
                 if self.isBiggerStraightOrStriaghtFlush(currentPlayCombo, playerCombo):
                     print("Valid play! Your straight flush is bigger\n")
                     isValidPlay = True
                 else:
                     print("Your straight flush is smaller\n")
-                    pass
             elif currentPlayCombo.getComboName() == "Full House" and playerCombo.getComboName() == "Full House":
                 if self.isBiggerFullHouse(currentPlayCombo, playerCombo):
                     print("Valid play! Your full house is bigger\n")
                     isValidPlay = True
                 else:
                     print("Your full house is smaller\n")
-                    pass
             elif currentPlayCombo.getComboName() == "Flush" and playerCombo.getComboName() == "Flush":
                 if self.isBiggerFlush(currentPlayCombo, playerCombo):
                     print("Valid play! Your flush is bigger\n")
                     isValidPlay = True
                 else:
                     print("Your flush is smaller\n")
-                    pass
             elif currentPlayCombo.getComboName() == "Dynamite" and playerCombo.getComboName() == "Dynamite":
                 if self.isBiggerDynamite(currentPlayCombo, playerCombo):
                     print("Valid play! Your dynamite is bigger\n")
                     isValidPlay = True
                 else:
                     print("Your dynamite is smaller\n")
-                    pass
-            elif currentPlayCombo.getComboName() == "Straight" and playerCombo.getComboName() in self.heigharchyCombos["Straight"]:
+            elif currentPlayCombo.getComboName() == "Straight" and playerCombo.getComboName() in self.heigharchyCombos["Striaght"]:
                 print("Valid play! Your combo is bigger")
                 isValidPlay = True
             elif currentPlayCombo.getComboName() == "Flush" and playerCombo.getComboName() in self.heigharchyCombos["Flush"]:
                 print("Valid play! Your combo is bigger")
                 isValidPlay = True
             elif currentPlayCombo.getComboName() == "Full House" and playerCombo.getComboName() in self.heigharchyCombos["Full House"]:
-                print("Valid play!. Your combo is bigger")
+                print("Valid play! Your combo is bigger")
                 isValidPlay = True
-            elif currentPlayCombo.getComboName() == "Dynamite" and playerCombo.getComboName() in self.heigharchyCombos["Dynamite"]:
-                print("Valid play!. Your combo is bigger")
+            elif currentPlayCombo.getComboName() == "Straight Flush" and playerCombo.getComboName() in self.heigharchyCombos["Straight Flush"]:
+                print("Valid play! Your combo is bigger")
                 isValidPlay = True
             else:
                 print("Not a valid play")
-                pass
-
-            roundNum += 1
 
             if isValidPlay:
                 self.currentPlayStack.append(playerCombo)
                 self.playerTurn.discardCard(playerCombo.getCards())
+
+                if len(self.playerTurn.getHand()) == 0:
+                    self.winner = self.playerTurn
+                    print(f"Winner is {self.winner.getName()}!")
+                    return
+
                 if self.playerIndex == 3:
                     self.playerIndex = 0
                 else:
@@ -219,38 +227,6 @@ class BigTwo():
                 roundNum += 1
             else:
                 continue
-
-        self.currentPlayStack.append(playerCombo)
-        # bigTwo.py — both call sites
-        self.playerTurn.discardCard(playerCombo.getCards())
-        # update to next player's turn
-        self.playerIndex += 1
-        self.playerTurn = self.players[self.playerIndex]
-        for player in Players:
-            if len(player.getHand()) == 0:
-                self.winner = player
-                break
-        print("Winner is", self.winner.getName(), "!")
-
-    def isBiggerSingleOrPairOrTriple(self, currentPlayCombo, playerCombo):
-        sortedCurrentCombo = self.sortBySuit(currentPlayCombo)
-        sortedPlayerCombo = self.sortBySuit(playerCombo)
-
-        currentPlayComboNumber = sortedCurrentCombo[-1].getNumber()
-        playerComboNumber = sortedPlayerCombo[-1].getNumber()
-
-        currentPlayComboSuit = sortedCurrentCombo[-1].getSuit()
-        playerComboSuit = sortedPlayerCombo[-1].getSuit()
-
-        if currentPlayComboNumber > playerComboNumber:
-            return False
-        elif currentPlayComboNumber < playerComboNumber:
-            return True
-        else:
-            if self.suitRanks[currentPlayComboSuit] > self.suitRanks[playerComboSuit]:
-                return False
-            elif self.suitRanks[currentPlayComboSuit] < self.suitRanks[playerComboSuit]:
-                return True
         
     def sortBySuit(self, combo):
         cardsList = combo.getCards()
@@ -275,43 +251,32 @@ class BigTwo():
             return currentPlayComboSuit < playerComboSuit
     
     def isBiggerFullHouse(self, currentPlayCombo, playerCombo):
-        # 3 3 3 4 4
-        # 5 5 6 6 6
-        currentThreeTriple = Combo("Unknown", currentPlayCombo[:3])
-        isCurrentThreeTriple = currentThreeTriple.isTriple()
-
-        playerThreeTriple = Combo("Unknown", playerCombo[:3])
-        isPlayerThreeTriple = playerThreeTriple.isTriple()
-
-        if not isCurrentThreeTriple and isPlayerThreeTriple:
-            currentThreeTriple = Combo("Unknown", currentPlayCombo[3:])
-        elif isCurrentThreeTriple and not isPlayerThreeTriple:
-            playerThreeTriple = Combo("Unknown", playerCombo[3:])
-        elif not isCurrentThreeTriple and not isPlayerThreeTriple:
-            currentThreeTriple = Combo("Unknown", currentPlayCombo[3:])
-            playerThreeTriple = Combo("Unknown", playerCombo[3:])
-        return isBiggerSingleOrPairOrTriple(currentThreeTriple, playerThreeTriple)
+        currentTripleNum = self.getTripleNumber(currentPlayCombo.getCards())
+        playerTripleNum = self.getTripleNumber(playerCombo.getCards())
+        return currentTripleNum < playerTripleNum
     
+    def getTripleNumber(self, cards):
+        counts = {}
+        for card in cards:
+            counts[card.getNumber()] = counts.get(card.getNumber(), 0) + 1
+        for number, count in counts.items():
+            if count == 3:
+                return number
+
     def isBiggerFlush(self, currentPlayCombo, playerCombo):
-
-        currentComboSuit = currentPlayCombo[0].getSuit()
-        playerComboSuit = playerCombo[0].getSuit()
-
+        currentComboSuit = currentPlayCombo.getCards()[0].getSuit()
+        playerComboSuit = playerCombo.getCards()[0].getSuit()
         return self.suitRanks[currentComboSuit] < self.suitRanks[playerComboSuit]
 
     def isBiggerDynamite(self, currentPlayCombo, playerCombo):
-        
-        currentDynamite = Combo("Unknown", currentPlayCombo[:4])
-        playerDynamite = Combo("Unkown", playerCombo[:4])
+        currentFourNum = self.getFourOfKindNumber(currentPlayCombo.getCards())
+        playerFourNum = self.getFourOfKindNumber(playerCombo.getCards())
+        return currentFourNum < playerFourNum
 
-        isFirstFourCurrentDynamite = currentDynamite.isDynamite()
-        isFirstFourPlayerDynamite = playerDynamite.isDynamite()
-
-        if isFirstFourCurrentDynamite and not isFirstFourPlayerDynamite:
-            playerDynamite = Combo("Unkown", playerPlayCombo[1:])
-        elif not isFirstFourCurrentDynamite and isFirstFourPlayerDynamite:
-            currentDynamite = Combo("Unknown", currentPlayCombo[1:])
-        elif not isFirstFourCurrentDynamite and not isFirstFourCurrentDynamite:
-            playerDynamite = Combo("Unkown", playerPlayCombo[1:])
-            currentDynamite = Combo("Unknown", currentPlayCombo[1:])
-        return currentDynamite[0].getNumber() < playerDynamite[0].getNumber()
+    def getFourOfKindNumber(self, cards):
+        counts = {}
+        for card in cards:
+            counts[card.getNumber()] = counts.get(card.getNumber(), 0) + 1
+        for number, count in counts.items():
+            if count == 4:
+                return number
