@@ -109,12 +109,12 @@ class BigTwo():
             if playerCombo is None:
                 self.passCounter += 1
                 print(f"{self.playerTurn.getName()} passed.\n")
-
+                if self.passCounter == 3 and roundNum > 1:
+                    print("Cannot pass turn. Play any card")
+                    continue
                 if self.passCounter == 3:
                     self.currentPlayStack = []
                     self.passCounter = 0
-
-                if self.playerIndex == 3:
                     self.playerIndex = 0
                 else:
                     self.playerIndex += 1
